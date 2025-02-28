@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor SRT Profissional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="google-adsense-account" content="ca-pub-4766738631539943">
+    <link rel="icon" type="image/png" href="logo.png.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .glass-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+        
+        /* Navbar corrigida */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .nav-link {
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            min-width: 100px;
+            flex: 1 1 auto;
+            margin: 2px;
+            text-align: center;
+        }
+        
+        .nav-link i {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav-link.active {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+        
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #4CAF50 rgba(255, 255, 255, 0.1);
+        }
+        
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        textarea::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        textarea::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+        
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #4CAF50;
+        }
+        
+        #filenameGroup {
+            margin-bottom: 20px;
+        }
+        
+        #filename {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        #filename:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #4CAF50;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 150px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+        }
+        
+        #result {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            color: #fff;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #4CAF50 rgba(255, 255, 255, 0.1);
+        }
+        
+        #result::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #result::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        #result::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+        
+        .loading::after {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-link {
+                flex-basis: calc(50% - 10px);
+                padding: 10px;
+                font-size: 14px;
+            }
+        
+            .nav-link i {
+                font-size: 16px;
+            }
+        
+            .btn {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-link {
+                flex-basis: calc(100% - 10px);
+                padding: 8px;
+                font-size: 12px;
+            }
+        
+            .nav-link i {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-container">
+        <nav class="navbar">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="tradutor.html" class="nav-link"><i class="fas fa-language"></i> Tradutor</a>
+            <a href="divisor.html" class="nav-link"><i class="fas fa-cut"></i> Divisor</a>
+            <a href="contador.html" class="nav-link"><i class="fas fa-calculator"></i> Contador</a>
+            <a href="srt.html" class="nav-link active"><i class="fas fa-closed-captioning"></i> Conversor</a>
+            <a href="case.html" class="nav-link"><i class="fas fa-text-height"></i> Caixa</a>
+            <a href="transcricao.html" class="nav-link"><i class="fas fa-headphones"></i> Transcrição</a>
+            <a href="meta.html" class="nav-link"><i class="fas fa-video"></i> Metadados</a>
+        </nav>
+
+        <h1><i class="fas fa-closed-captioning"></i> Conversor SRT Inteligente</h1>
+
+        <div class="input-group">
+            <textarea id="inputText" placeholder="Cole seu texto aqui..."></textarea>
+        </div>
+
+        <div class="input-group" id="filenameGroup" style="display: none;">
+            <input type="text" id="filename" placeholder="Nome do arquivo (sem extensão)">
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="processText()" id="convertBtn">
+                <i class="fas fa-sync-alt"></i> Converter
+            </button>
+            <button class="btn btn-secondary" onclick="downloadFile()" id="downloadBtn" disabled>
+                <i class="fas fa-download"></i> Baixar SRT
+            </button>
+            <button class="btn btn-danger" onclick="clearFields()">
+                <i class="fas fa-trash-alt"></i> Limpar
+            </button>
+        </div>
+
+        <pre id="result"></pre>
+    </div>
+
+    <script>
+        const config = { charsPerSecond: 15, maxBlockDuration: 30, minPause: 20, maxLineLength: 450 };
+
+        function processText() {
+            const rawText = document.getElementById('inputText').value.trim();
+            if (!rawText) return showAlert('Insira texto para converter!', 'error');
+            toggleLoading(true);
+            try {
+                const blocks = splitIntoBlocks(rawText);
+                const srtContent = generateSRT(blocks);
+                document.getElementById('result').textContent = srtContent;
+                document.getElementById('downloadBtn').disabled = false;
+                showAlert('Conversão concluída!', 'success');
+            } catch (error) {
+                showAlert(`Erro: ${error.message}`, 'error');
+            } finally {
+                toggleLoading(false);
+            }
+        }
+
+        function splitIntoBlocks(text) {
+            const paragraphs = text.split('\n').filter(p => p.trim());
+            const blocks = [];
+            let currentBlock = '';
+            let currentLength = 0;
+
+            paragraphs.forEach(paragraph => {
+                const sentences = paragraph.split(/(?<=[.!?])\s+/g);
+                sentences.forEach(sentence => {
+                    const words = sentence.split(/(\s+)/).filter(w => w.trim());
+                    words.forEach(word => {
+                        const wordLength = word.length;
+                        if ((currentLength + wordLength) > config.maxLineLength) {
+                            blocks.push(currentBlock.trim());
+                            currentBlock = '';
+                            currentLength = 0;
+                        }
+                        currentBlock += word + ' ';
+                        currentLength += wordLength + 1;
+                    });
+                });
+            });
+
+            if (currentBlock.trim().length > 0) {
+                blocks.push(currentBlock.trim());
+            }
+
+            return blocks.filter(b => b.trim());
+        }
+
+        function generateSRT(blocks) {
+            let srt = '';
+            let currentTime = 0;
+            blocks.forEach((block, index) => {
+                const duration = config.maxBlockDuration;
+                const pause = config.minPause;
+                const start = currentTime;
+                const end = start + duration;
+                srt += `${index + 1}\n${formatTime(start)} --> ${formatTime(end)}\n${block}\n\n`;
+                currentTime = end + pause;
+            });
+            return srt;
+        }
+
+        function formatTime(totalSeconds) {
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)},000`;
+        }
+
+        function pad(num) { return num.toString().padStart(2, '0'); }
+
+        function downloadFile() {
+            const content = document.getElementById('result').textContent;
+            const filename = document.getElementById('filename').value || `legenda_${Date.now()}.srt`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename.endsWith('.srt') ? filename : `${filename}.srt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearFields() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('result').textContent = '';
+            document.getElementById('downloadBtn').disabled = true;
+            document.getElementById('filename').value = '';
+        }
+
+        function toggleLoading(loading) {
+            const btn = document.getElementById('convertBtn');
+            btn.innerHTML = loading ? '<i class="fas fa-spinner loading"></i> Processando...' : '<i class="fas fa-sync-alt"></i> Converter';
+            btn.disabled = loading;
+        }
+
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.style.position = 'fixed';
+            alert.style.top = '20px';
+            alert.style.right = '20px';
+            alert.style.padding = '15px';
+            alert.style.borderRadius = '8px';
+            alert.style.color = 'white';
+            alert.style.background = type === 'error' ? '#dc3545' : '#28a745';
+            alert.textContent = message;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

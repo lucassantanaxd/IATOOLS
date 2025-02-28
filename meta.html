@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Metadados de Vídeos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <meta name="google-adsense-account" content="ca-pub-4766738631539943">
+    <style>
+        /* Reset e Configurações Gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        /* Container Principal */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 20px auto;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1 1 auto;
+            margin: 2px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            font-size: 18px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+
+        /* Títulos */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        h1 i {
+            font-size: 1.2em;
+        }
+
+        /* Área de Upload */
+        .upload-container {
+            margin: 20px 0;
+        }
+
+        .custom-file-input {
+            display: block;
+            padding: 25px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            cursor: pointer;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .custom-file-input input {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .custom-file-input:hover {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.05);
+        }
+
+        .drag-drop-area {
+            border: 2px dashed #4CAF50;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            color: #fff;
+            margin: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .drag-drop-area.dragover {
+            background: rgba(76, 175, 80, 0.1);
+            transform: scale(1.02);
+        }
+
+        .fa-file-upload {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #4CAF50;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Informações do Arquivo */
+        .file-name {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #4CAF50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-name i {
+            font-size: 16px;
+        }
+
+        .file-size {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-left: 5px;
+        }
+
+        /* Barra de Progresso */
+        .progress-bar {
+            height: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-text {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fff;
+            font-size: 12px;
+        }
+
+        /* Mensagens e Alertas */
+        .message {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        .alert-success {
+            background: #28a745;
+        }
+
+        .alert-error {
+            background: #dc3545;
+        }
+
+        .alert.hide {
+            animation: slideOut 0.3s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); }
+            to { transform: translateX(150%); }
+        }
+
+        /* Botões */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #218838);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn i {
+            font-size: 16px;
+        }
+
+        /* Seção de Download */
+        .download-section {
+            display: none;
+            gap: 15px;
+            justify-content: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .glass-container {
+                padding: 20px;
+            }
+
+            .navbar {
+                gap: 8px;
+            }
+
+            .nav-link {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .drag-drop-area {
+                padding: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .download-section {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-link {
+                flex-basis: calc(50% - 4px);
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+
+            .nav-link i {
+                font-size: 14px;
+            }
+
+            .custom-file-input {
+                padding: 20px;
+            }
+
+            .btn {
+                font-size: 12px;
+                padding: 10px 15px;
+            }
+        }
+
+        /* Animações Adicionais */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Efeitos de Foco */
+        :focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-container">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+            <a href="tradutor.html" class="nav-link"><i class="fas fa-language"></i> Tradutor</a>
+            <a href="divisor.html" class="nav-link"><i class="fas fa-cut"></i> Divisor</a>
+            <a href="contador.html" class="nav-link"><i class="fas fa-calculator"></i> Contador</a>
+            <a href="srt.html" class="nav-link"><i class="fas fa-closed-captioning"></i> Conversor</a>
+            <a href="case.html" class="nav-link"><i class="fas fa-text-height"></i> Caixa</a>
+            <a href="transcricao.html" class="nav-link"><i class="fas fa-headphones"></i> Transcrição</a>
+            <a href="meta.html" class="nav-link active"><i class="fas fa-video"></i> Metadados</a>
+        </nav>
+
+        <h1><i class="fas fa-video"></i> Remover Metadados de Vídeos [EM MANUTENÇÃO]</h1>
+
+        <!-- Área de Upload -->
+        <div class="upload-container">
+            <div class="input-group">
+                <label for="fileUpload" class="custom-file-input">
+                    <i class="fas fa-upload"></i> Selecione um vídeo (MP4, MOV, AVI)
+                    <input type="file" id="fileUpload" accept="video/*">
+                </label>
+                <div id="fileName" class="file-name"></div>
+            </div>
+
+            <div class="drag-drop-area" id="dropZone">
+                <i class="fas fa-file-upload"></i>
+                <p>Arraste e solte seu vídeo aqui</p>
+            </div>
+        </div>
+
+        <!-- Barra de Progresso -->
+        <div id="progressBar" class="progress-bar">
+            <div id="progressBarFill" class="progress-bar-fill"></div>
+            <span id="progressText">0%</span>
+        </div>
+
+        <!-- Botões -->
+        <div class="button-group">
+            <button id="removeMetadataButton" class="btn btn-primary">
+                <i class="fas fa-trash"></i> Remover Metadados
+            </button>
+        </div>
+
+        <!-- Mensagem de Status -->
+        <p id="message" class="message"></p>
+
+        <!-- Seção de Download -->
+        <div id="downloadSection" class="download-section">
+            <a id="saveVideo" download class="btn btn-success">
+                <i class="fas fa-download"></i> Baixar Vídeo Limpo
+            </a>
+            <button id="newUploadButton" class="btn btn-danger">
+                <i class="fas fa-redo"></i> Novo Upload
+            </button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
+    <script>
+        const { createFFmpeg, fetchFile } = FFmpeg;
+        const ffmpeg = createFFmpeg({ 
+            log: true,
+            corePath: 'https://unpkg.com/@ffmpeg/core@0.12.4/dist/ffmpeg-core.js'
+        });
+
+        const elements = {
+            fileInput: document.getElementById('fileUpload'),
+            removeMetadataButton: document.getElementById('removeMetadataButton'),
+            progressBar: document.getElementById('progressBar'),
+            progressBarFill: document.getElementById('progressBarFill'),
+            progressText: document.getElementById('progressText'),
+            fileName: document.getElementById('fileName'),
+            downloadSection: document.getElementById('downloadSection'),
+            saveVideo: document.getElementById('saveVideo'),
+            message: document.getElementById('message'),
+            dropZone: document.getElementById('dropZone')
+        };
+
+        let currentFile = null;
+
+        // Event Listeners
+        elements.fileInput.addEventListener('change', handleFileSelect);
+        elements.removeMetadataButton.addEventListener('click', processVideo);
+        elements.dropZone.addEventListener('dragover', handleDragOver);
+        elements.dropZone.addEventListener('drop', handleDrop);
+        elements.dropZone.addEventListener('dragleave', handleDragLeave);
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            handleFile(file);
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            elements.dropZone.classList.add('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            elements.dropZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            elements.dropZone.classList.remove('dragover');
+        }
+
+        function handleFile(file) {
+            if (!file.type.startsWith('video/')) {
+                showAlert('Por favor, selecione um arquivo de vídeo válido!', 'error');
+                return;
+            }
+            
+            currentFile = file;
+            elements.fileName.innerHTML = `
+                <i class="fas fa-file-video"></i>
+                ${file.name} (${(file.size/1024/1024).toFixed(2)} MB)
+            `;
+            elements.downloadSection.style.display = 'none';
+            showAlert('Arquivo carregado com sucesso!', 'success');
+        }
+
+        async function processVideo() {
+            if (!currentFile) {
+                showAlert('Selecione um arquivo primeiro!', 'error');
+                return;
+            }
+
+            try {
+                elements.removeMetadataButton.disabled = true;
+                elements.progressBar.style.display = 'block';
+                
+                if (!ffmpeg.isLoaded()) {
+                    await ffmpeg.load();
+                }
+
+                ffmpeg.setProgress(({ ratio }) => {
+                    const progress = Math.round(ratio * 100);
+                    elements.progressBarFill.style.width = `${progress}%`;
+                    elements.progressText.textContent = `${progress}%`;
+                });
+
+                ffmpeg.FS('writeFile', currentFile.name, await fetchFile(currentFile));
+
+                await ffmpeg.run(
+                    '-i', currentFile.name,
+                    '-map_metadata', '-1',
+                    '-c:v', 'copy',
+                    '-c:a', 'copy',
+                    'output.mp4'
+                );
+
+                const data = ffmpeg.FS('readFile', 'output.mp4');
+                const url = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+                
+                elements.saveVideo.href = url;
+                elements.saveVideo.download = `video_sem_metadados_${Date.now()}.mp4`;
+                elements.downloadSection.style.display = 'block';
+                
+                showAlert('Metadados removidos com sucesso!', 'success');
+            } catch (error) {
+                console.error(error);
+                showAlert('Erro ao processar o vídeo!', 'error');
+            } finally {
+                elements.removeMetadataButton.disabled = false;
+                elements.progressBar.style.display = 'none';
+            }
+        }
+
+        function showAlert(message, type) {
+            elements.message.textContent = message;
+            elements.message.className = `message ${type}`;
+            elements.message.style.display = 'block';
+            
+            setTimeout(() => {
+                elements.message.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

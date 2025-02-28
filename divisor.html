@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisor de Texto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="google-adsense-account" content="ca-pub-4766738631539943">
+    <link rel="icon" type="image/png" href="logo.png.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        /* Navbar centralizada */
+        .navbar {
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            width: 100%; /* Garante que a navbar ocupe toda a largura */
+        }
+
+        /* Estilo dos links da navbar */
+        .nav-link {
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center; /* Centraliza verticalmente */
+            justify-content: center; /* Centraliza horizontalmente */
+            gap: 8px; /* Espaço entre ícone e texto */
+            text-decoration: none;
+            min-width: 100px;
+            flex: 1 1 auto;
+            margin: 2px;
+            text-align: center; /* Centraliza o texto */
+        }
+
+        .nav-link i {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #4CAF50 rgba(255, 255, 255, 0.1);
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        textarea::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #4CAF50;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+        }
+
+        .parts-grid {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            margin-top: 30px;
+        }
+
+        .part-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .part-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .part-container h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .part-container pre {
+            color: #fff;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.5;
+            margin: 15px 0;
+        }
+
+        .copy-part {
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        }
+
+        .copy-part:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 768px) {
+            .nav-link {
+                flex-basis: calc(50% - 10px);
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+
+            .nav-link i {
+                font-size: 16px;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-link {
+                flex-basis: calc(33.33% - 10px);
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+
+            .nav-link i {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+        <div class="glass-container">
+            <nav class="navbar">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a>
+                <a href="tradutor.html" class="nav-link"><i class="fas fa-language"></i> Tradutor</a>
+                <a href="divisor.html" class="nav-link active"><i class="fas fa-cut"></i> Divisor</a>
+                <a href="contador.html" class="nav-link"><i class="fas fa-calculator"></i> Contador</a>
+                <a href="srt.html" class="nav-link"><i class="fas fa-closed-captioning"></i> Conversor</a>
+                <a href="case.html" class="nav-link"><i class="fas fa-text-height"></i> Caixa</a>
+                <a href="transcricao.html" class="nav-link"><i class="fas fa-headphones"></i> Transcrição</a>
+                <a href="meta.html" class="nav-link"><i class="fas fa-video"></i> Metadados</a>
+            </nav>
+        <h1><i class="fas fa-cut"></i> Divisor de Texto</h1>
+
+        <div class="input-group">
+            <textarea id="sourceText" placeholder="Cole seu texto longo aqui..."></textarea>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="splitText()">
+                <i class="fas fa-scissors"></i> Dividir
+            </button>
+            <button class="btn btn-danger" onclick="clearSplit()">
+                <i class="fas fa-trash-alt"></i> Limpar
+            </button>
+        </div>
+
+        <div id="partsContainer" class="parts-grid"></div>
+    </div>
+
+    <script>
+        function splitText() {
+            const text = document.getElementById('sourceText').value;
+            if (!text.trim()) return showAlert('Insira texto para dividir!', 'error');
+
+            const maxLength = 4800;
+            const parts = [];
+            let start = 0;
+
+            while (start < text.length) {
+                let end = start + maxLength;
+                if (end < text.length && !/\s/.test(text[end])) {
+                    end = text.lastIndexOf(' ', end);
+                    if (end === -1 || end <= start) {
+                        end = start + maxLength;
+                    }
+                }
+                parts.push(text.slice(start, end).trim());
+                start = end;
+            }
+
+            displayParts(parts);
+        }
+
+        function displayParts(parts) {
+            const container = document.getElementById('partsContainer');
+            container.innerHTML = '';
+
+            parts.forEach((part, index) => {
+                const partDiv = document.createElement('div');
+                partDiv.className = 'part-container';
+                partDiv.innerHTML = `
+                    <h3><i class="fas fa-file-alt"></i> Parte ${index + 1} <small>(${part.length} caracteres)</small></h3>
+                    <pre>${part}</pre>
+                    <button class="btn btn-secondary copy-part" onclick="copyPart(${index})">
+                        <i class="fas fa-copy"></i> Copiar Parte
+                    </button>
+                `;
+                container.appendChild(partDiv);
+            });
+        }
+
+        function copyPart(index) {
+            const partText = document.querySelectorAll('pre')[index].textContent;
+            navigator.clipboard.writeText(partText);
+            showAlert('Parte copiada!', 'success');
+        }
+
+        function clearSplit() {
+            document.getElementById('sourceText').value = '';
+            document.getElementById('partsContainer').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

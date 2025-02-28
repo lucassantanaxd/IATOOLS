@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT Converter Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="google-adsense-account" content="ca-pub-4766738631539943">
+    <link rel="icon" type="image/png" href="logo.png.ico">
+    <style>
+        /* Reset e Configurações Gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
+        }
+
+        /* Container Principal */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 1200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin: 20px auto;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex: 1 1 auto;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .nav-link i {
+            font-size: 18px;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+        }
+
+        /* Títulos */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        h1 i {
+            font-size: 1.2em;
+        }
+
+        /* Conteúdo */
+        .content {
+            text-align: center;
+        }
+
+        .content p {
+            color: #fff;
+            margin-bottom: 30px;
+        }
+
+        /* Botões */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none; /* Removendo sublinhado */
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn i {
+            font-size: 16px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .glass-container {
+                padding: 20px;
+            }
+
+            .navbar {
+                gap: 8px;
+            }
+
+            .nav-link {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-link {
+                flex-basis: calc(50% - 4px);
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+
+            .nav-link i {
+                font-size: 14px;
+            }
+
+            .btn {
+                font-size: 12px;
+                padding: 10px 15px;
+            }
+        }
+
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-container">
+        <nav class="navbar">
+            <a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+            <a href="tradutor.html" class="nav-link"><i class="fas fa-language"></i> Tradutor</a>
+            <a href="divisor.html" class="nav-link"><i class="fas fa-cut"></i> Divisor</a>
+            <a href="contador.html" class="nav-link"><i class="fas fa-calculator"></i> Contador</a>
+            <a href="srt.html" class="nav-link"><i class="fas fa-closed-captioning"></i> Conversor</a>
+            <a href="case.html" class="nav-link"><i class="fas fa-text-height"></i> Caixa</a>
+            <a href="transcricao.html" class="nav-link"><i class="fas fa-headphones"></i> Transcrição</a>
+            <a href="meta.html" class="nav-link"><i class="fas fa-video"></i> Metadados</a>
+        </nav>
+<br>
+        <h1><i class="fas fa-closed-captioning"></i> Bem-vindo ao SRT Converter Pro</h1>
+
+        <div class="content">
+            <p>Converta seus textos em legendas SRT profissionais de forma rápida e intuitiva!</p>
+
+            <div class="button-group">
+                <a href="srt.html" class="btn btn-primary" id="startButton">
+                    <i class="fas fa-play"></i> Começar Agora
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
