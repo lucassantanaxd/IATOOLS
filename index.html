@@ -9,6 +9,18 @@
     <meta name="google-adsense-account" content="ca-pub-4766738631539943">
     <link rel="icon" type="image/png" href="logo.png.ico">
     <style>
+
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #45a049;
+            --danger-color: #cc0000;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --gradient-bg: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+          }
         /* Reset e Configurações Gerais */
         * {
             margin: 0;
@@ -28,53 +40,84 @@
         }
 
         /* Container Principal */
-        .glass-container {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px) saturate(180%);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 1200px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            margin: 20px auto;
-        }
+         /* Container Principal */
+    .glass-container {
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.08) 0%,
+          rgba(255, 255, 255, 0.03) 100%
+        );
+        backdrop-filter: blur(20px) saturate(180%);
+        border-radius: 24px;
+        padding: 35px;
+        width: auto;
+        max-width: none;
+        display: inline-block;
+        min-width: 80%;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin: 20px auto;
+        position: relative;
+        overflow: hidden;
+      }
+  
+   /* Navbar ajustada */
+   .navbar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 35px;
+    display: inline-flex;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    gap: 12px;
+    margin-bottom: 35px;
+    width: 100%;
+    
+  }
+        /* Scrollbar personalizada */
+   .navbar::-webkit-scrollbar {
+    height: 6px;
+  }
 
-        /* Navbar */
-        .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
 
-        .nav-link {
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            flex: 1 1 auto;
-            text-align: center;
-            justify-content: center;
-        }
+ .navbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+  }
 
-        .nav-link i {
-            font-size: 18px;
-        }
+  .navbar::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+  }
+  .nav-link {
+    color: var(--text-primary);
+    padding: 12px 24px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    display: inline-flex; /* Alterado para inline-flex */
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    white-space: nowrap; /* Impede quebra de texto */
+    flex-shrink: 0; /* Impede redução do tamanho */
+    
+  }
 
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
 
-        .nav-link.active {
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-        }
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .nav-link.active {
+    background: var(--gradient-primary);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.35);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+  
 
         /* Títulos */
         h1 {
@@ -214,6 +257,7 @@
             <a href="case.html" class="nav-link"><i class="fas fa-text-height"></i> Caixa</a>
             <a href="transcricao.html" class="nav-link"><i class="fas fa-headphones"></i> Transcrição</a>
             <a href="meta.html" class="nav-link"><i class="fas fa-video"></i> Metadados</a>
+            <a href="compress.html" class="nav-link"><i class="fas fa-compress"></i> Compressor</a>
         </nav>
 <br>
         <h1><i class="fas fa-closed-captioning"></i> Bem-vindo ao SRT Converter Pro</h1>
